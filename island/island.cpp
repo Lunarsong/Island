@@ -109,7 +109,6 @@ float* GenerateHeightmap(uint32_t seed, int num_octaves, uint32_t size_x,
   assert(size_x);
   assert(size_y);
 
-  // ExponentialDistributedPerlin exponential_distributed_perlin(seed);
   SimplexNoise noise;
   noise.SetSeed(seed);
   noise.SetBounds(0.0f, 1.0f);
@@ -121,19 +120,6 @@ float* GenerateHeightmap(uint32_t seed, int num_octaves, uint32_t size_x,
   for (uint32_t y = 0; y < size_y; ++y) {
     for (uint32_t x = 0; x < size_x; ++x) {
       const uint32_t array_index = y * size_x + x;
-
-      // Retrieve noise value from -1.0f to 1.0f.
-      /*float noise = exponential_distributed_perlin.Noise2D(
-          (float)x / (float)(size_x - 1), (float)y / (float)(size_y - 1),
-          num_octaves);
-
-      // Normalize the noise value.
-      noise = noise * 0.5f + 0.5f;
-
-      // Set the height.
-      heights[array_index] = noise * height_range + min_height;
-      // std::cout << noise << std::endl;*/
-
       heights[array_index] = noise.Noise(x, y);
     }
   }
